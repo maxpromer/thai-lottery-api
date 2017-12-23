@@ -4,6 +4,20 @@ date_default_timezone_set('Asia/Bangkok');
 
 include('simple_html_dom.php');
 
+function strToHex($string){
+	$hex = '';
+	if (isset($_GET['hex'])) {
+		for ($i=0; $i<strlen($string); $i++){
+			$ord = ord($string[$i]);
+			$hexCode = dechex($ord);
+			$hex .= "\x" . substr('0'.$hexCode, -2);
+		}
+	} else {
+		$hex = $string;
+	}
+	return $hex;
+}
+
 function exitJson($obj) {
 	exit(json_encode($obj));
 }
@@ -11,7 +25,7 @@ function exitJson($obj) {
 function err($msg) {
 	exitJson([
 		'e' => true, 
-		'msg' => $msg
+		'msg' => strToHex($msg)
 	]);
 }
 
@@ -47,5 +61,5 @@ exitJson([
 	'e' => false, 
 	'date' => $date,
 	'number' => $number,
-	'result' => $result
+	'result' => $result !== -1 ? strToHex($result) : -1
 ]);
