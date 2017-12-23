@@ -56,7 +56,7 @@ $html = str_get_html($data);
 
 $number = trim($html->find('td.checkLotto > span.GreenBold', 0)->plaintext);
 $result = trim($html->find('td.checkLotto > span', 1)->plaintext);
-$result = strpos('ไม่ถูกรางวัล') !== false ? -1 : $result;
+$result = strpos($result, 'ไม่ถูกรางวัล') !== false ? -1 : $result;
 exitJson([
 	'e' => false, 
 	'date' => $date,
